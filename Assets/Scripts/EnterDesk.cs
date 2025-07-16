@@ -37,9 +37,10 @@ public class EnterDesk : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            OnExitDesk();
-        }
+        //debug code to make sure exitdesk works
+        // if (Input.GetKeyDown(KeyCode.Escape))
+        // {
+        //     OnExitDesk();
+        // }
     }
 }
