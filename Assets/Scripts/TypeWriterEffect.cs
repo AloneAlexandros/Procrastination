@@ -9,8 +9,8 @@ public class TypeWriterEffect : MonoBehaviour
     public static bool stopped= false;
     public void Run(string TextToType, TMP_Text textLabel)
     {
+        TypeWriterEffect.stopped = false;
         StartCoroutine(TypeText(TextToType, textLabel));
-        stopped = false;
     }
 
     private IEnumerator TypeText(string TextToType, TMP_Text textLabel)

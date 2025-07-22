@@ -4,21 +4,26 @@ using TMPro;
 using UnityEngine;
 public class TextBoxSystem : MonoBehaviour
 {
-    public static string[] _textToDisplay = {};
+    public static string[] TextToDisplay = {};
     private bool _waitingForEnter = false;
     public GameObject enterButton;
     public GameObject textBox;
     public TMP_Text textLabel;
+
+    private int currentText = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        TextToDisplay = TextToDisplay.Append("Nice! I'm finally back home!").ToArray();
+        TextToDisplay = TextToDisplay.Append("Can't wait to dive into that GameJam I joined! I think it started a few hours ago?").ToArray();
+        TextToDisplay = TextToDisplay.Append("The theme is quite hard to wrap my head around... what the heck could I do with 'Just get started'").ToArray();
+        TextToDisplay = TextToDisplay.Append("...maybe I should get started with cleaning this mess though.").ToArray();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_textToDisplay.Length != 0)
+        if (TextToDisplay.Length > currentText)
         {
             textBox.SetActive(true);
         }
@@ -26,23 +31,16 @@ public class TextBoxSystem : MonoBehaviour
         {
             textBox.SetActive(false);
         }
-        if (_textToDisplay.Length != 0 && !_waitingForEnter)
+        if (TextToDisplay.Length > currentText && !_waitingForEnter)
         {
-            GetComponent<TypeWriterEffect>().Run(_textToDisplay[0], textLabel);
+            GetComponent<TypeWriterEffect>().Run(TextToDisplay[currentText], textLabel);
             _waitingForEnter = true;
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && TypeWriterEffect.stopped == true)
         {
-            if (TypeWriterEffect.stopped == false)
-            {
-                TypeWriterEffect.stopped = true;
-                textLabel.text = _textToDisplay[0];
-            }
-            else
-            {
-                _waitingForEnter = false;
-                RemoveAt(ref _textToDisplay, 0);
-            }
+            currentText++;
+            textLabel.text = "";
+            _waitingForEnter = false;
         }
         if (TypeWriterEffect.stopped == true)
         {
@@ -53,20 +51,9 @@ public class TextBoxSystem : MonoBehaviour
             enterButton.SetActive(false);
         }
     }
-    
-    public static void RemoveAt<T>(ref T[] arr, int index)
-    {
-        for (int a = index; a < arr.Length - 1; a++)
-        {
-            // moving elements downwards, to fill the gap at [index]
-            arr[a] = arr[a + 1];
-        }
-        // finally, let's decrement Array's size by one
-        Array.Resize(ref arr, arr.Length - 1);
-    }
 
     public void DesktopPlant()
     {
-        _textToDisplay = _textToDisplay.Append("Well that's not how physics is supposed to work").ToArray();
+        TextToDisplay = TextToDisplay.Append("Well that's not how physics is supposed to work").ToArray();
     }
 }
