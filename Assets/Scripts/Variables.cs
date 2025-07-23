@@ -5,7 +5,8 @@ public class Variables : MonoBehaviour
     public static bool ComputerBooted = false;
 
     public static bool WateringPlants = false;
-    public static int PlantsWatered = 0;
+    public static int PlantsLeft = 5;
+    public static int MessLeft = 2;
     public Interactions[] plants;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,9 +16,14 @@ public class Variables : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (WateringPlants && plants.Length == PlantsWatered)
+        if (WateringPlants && PlantsLeft == 0)
         {
             //do something important here
+        }
+
+        if (MessLeft == 0)
+        {
+            //come on show sum text or smth
         }
     }
 
