@@ -10,20 +10,20 @@ public class TextBoxSystem : MonoBehaviour
     public GameObject textBox;
     public TMP_Text textLabel;
 
-    private int currentText = 0;
+    private int _currentText = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         TextToDisplay = TextToDisplay.Append("Nice! I'm finally back home!").ToArray();
         TextToDisplay = TextToDisplay.Append("Can't wait to dive into that GameJam I joined! I think it started a few hours ago?").ToArray();
         TextToDisplay = TextToDisplay.Append("The theme is quite hard to wrap my head around... what the heck could I do with 'Just get started'").ToArray();
-        TextToDisplay = TextToDisplay.Append("...maybe I should get started with cleaning this mess though.").ToArray();
+        TextToDisplay = TextToDisplay.Append("...maybe I should get started with cleaning this mess first, though.").ToArray();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TextToDisplay.Length > currentText)
+        if (TextToDisplay.Length > _currentText)
         {
             textBox.SetActive(true);
         }
@@ -31,14 +31,14 @@ public class TextBoxSystem : MonoBehaviour
         {
             textBox.SetActive(false);
         }
-        if (TextToDisplay.Length > currentText && !_waitingForEnter)
+        if (TextToDisplay.Length > _currentText && !_waitingForEnter)
         {
-            GetComponent<TypeWriterEffect>().Run(TextToDisplay[currentText], textLabel);
+            GetComponent<TypeWriterEffect>().Run(TextToDisplay[_currentText], textLabel);
             _waitingForEnter = true;
         }
         if (Input.GetKeyDown(KeyCode.Return) && TypeWriterEffect.stopped == true)
         {
-            currentText++;
+            _currentText++;
             textLabel.text = "";
             _waitingForEnter = false;
         }

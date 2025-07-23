@@ -9,10 +9,11 @@ public class Interactions : MonoBehaviour
 {
     [FormerlySerializedAs("OnInteraction")] public UnityEvent onInteraction;
     [SerializeField] private bool mustBeClose = false;
+    public bool interactionEnabled = false;
     private bool _isInRange = false;
     private void OnMouseEnter()
     {
-        if (!mustBeClose || _isInRange)
+        if ((!mustBeClose || _isInRange) && interactionEnabled)
         {
             this.gameObject.GetComponent<Outline>().enabled = true;
         }
@@ -20,7 +21,7 @@ public class Interactions : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!mustBeClose || _isInRange)
+        if ((!mustBeClose || _isInRange) && interactionEnabled)
         {
             this.gameObject.GetComponent<Outline>().enabled = false;
         }
@@ -28,7 +29,7 @@ public class Interactions : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!mustBeClose || _isInRange)
+        if ((!mustBeClose || _isInRange) && interactionEnabled)
         {
             this.gameObject.GetComponent<Outline>().enabled = false;
             onInteraction.Invoke();
