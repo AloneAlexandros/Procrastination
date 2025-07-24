@@ -8,6 +8,10 @@ public class Variables : MonoBehaviour
     public static int PlantsLeft = 5;
     public static int MessLeft = 2;
     public Interactions[] plants;
+
+    public GameObject wateringCan;
+
+    public TextBoxSystem textBoxSystem;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,12 +22,14 @@ public class Variables : MonoBehaviour
     {
         if (WateringPlants && PlantsLeft == 0)
         {
-            //do something important here
+           WateringPlants = false;
+           textBoxSystem.Gaem();
         }
 
         if (MessLeft == 0)
         {
-            //come on show sum text or smth
+            textBoxSystem.PlantWork();
+            MessLeft++;
         }
     }
 
@@ -31,9 +37,9 @@ public class Variables : MonoBehaviour
     {
         foreach (var plant in plants)
         {
-            plant.enabled = true;
+            plant.interactionEnabled = true;
         }
         WateringPlants = true;
-        //also put the waterer on the player's hands
+        wateringCan.SetActive(true);
     }
 }

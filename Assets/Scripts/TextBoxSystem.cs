@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using Cinemachine;
+using StarterAssets;
 using TMPro;
 using UnityEngine;
 public class TextBoxSystem : MonoBehaviour
@@ -9,6 +11,11 @@ public class TextBoxSystem : MonoBehaviour
     public GameObject enterButton;
     public GameObject textBox;
     public TMP_Text textLabel;
+    public FirstPersonController playerController;
+    public CinemachineBrain cameraBrain;
+    private bool _waterThePlantsNext = false;
+    public Variables variables;
+    public Interactions desk;
 
     private int _currentText = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,11 +32,22 @@ public class TextBoxSystem : MonoBehaviour
     {
         if (TextToDisplay.Length > _currentText)
         {
+            playerController.enabled = false;
+            cameraBrain.enabled = false;
             textBox.SetActive(true);
         }
         else
         {
+            if (_waterThePlantsNext)
+            {
+                print("water");
+                _waterThePlantsNext = false;
+                variables.TimeToWaterThePlants();
+            }
+            
             textBox.SetActive(false);
+            playerController.enabled = true;
+            cameraBrain.enabled = true;
         }
         if (TextToDisplay.Length > _currentText && !_waitingForEnter)
         {
@@ -55,5 +73,20 @@ public class TextBoxSystem : MonoBehaviour
     public void DesktopPlant()
     {
         TextToDisplay = TextToDisplay.Append("Well that's not how physics is supposed to work").ToArray();
+    }
+
+    public void PlantWork()
+    {
+        TextToDisplay = TextToDisplay.Append("Alright, now that's done, I should probably get started already...").ToArray();
+        TextToDisplay = TextToDisplay.Append("Wait! My plants! When did I last water them?????").ToArray();
+        TextToDisplay = TextToDisplay.Append("I gotta do it now!!!!").ToArray();
+        _waterThePlantsNext = true;
+    }
+
+    public void Gaem()
+    {
+        TextToDisplay = TextToDisplay.Append("Plants are watered!").ToArray();
+        TextToDisplay = TextToDisplay.Append("Guess I have nothing else than to sit on my desk now, huh?").ToArray();
+        desk.interactionEnabled = true;
     }
 }
