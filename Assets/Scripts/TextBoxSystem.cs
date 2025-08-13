@@ -32,7 +32,10 @@ public class TextBoxSystem : MonoBehaviour
     {
         if (TextToDisplay.Length > _currentText)
         {
-            playerController.enabled = false;
+            if (playerController != null)
+            {
+                playerController.enabled = false;
+            }
             cameraBrain.enabled = false;
             textBox.SetActive(true);
         }
@@ -46,7 +49,10 @@ public class TextBoxSystem : MonoBehaviour
             }
             
             textBox.SetActive(false);
-            playerController.enabled = true;
+            if (playerController != null)
+            {
+                playerController.enabled = true;
+            }
             cameraBrain.enabled = true;
         }
         if (TextToDisplay.Length > _currentText && !_waitingForEnter)
